@@ -1,0 +1,53 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<string.h>
+#include<errno.h>
+#include<stdlib.h>
+#include<math.h>
+#include<stdio.h>
+#include<assert.h>
+
+int n, a[11],total=0,e[50595][11];
+void dfs(int step,int sum)
+{
+	if (sum > n)
+		return;//剪枝
+	if (step == 11)
+	{
+		if (sum == n)
+		{
+			total++;
+			for (int i = 1; i <= 10; i++)
+				e[total][i] = a[i];
+		}
+		return;
+	}
+	for (int i = 1; i <= 3; i++)
+	{
+		a[step] = i;
+		dfs(step + 1, sum + i);
+		a[step] = 0;
+	}
+}
+int main()
+{
+	scanf("%d", &n);
+	if (n < 10 || n>30)
+	{
+		printf("%d", 0);
+		return 0;
+	}
+	dfs(1,0);
+	printf("%d\n", total);
+	for (int i = 1; i <= total; i++)
+	{
+		for (int j = 1; j <= 10; j++)
+		{
+			printf("%d ", e[i][j]);
+			if (j == 10)
+			{
+				printf("\n");
+			}
+		}
+	}
+	return 0;
+}
